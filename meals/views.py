@@ -1,3 +1,4 @@
+from tempfile import template
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from .models import Meal, Ingredient
@@ -18,13 +19,14 @@ def delete_meal(request, meal_id):
 def add_ingredient(request):
     """add ingredients"""
     if request.method == "POST":
-        form = IngredientForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("home")
-    form = IngredientForm()
-    context = {"ingredient_form": form}
-    return render(request, "index.html", context)
+        ingredient_form = IngredientForm(request.POST)
+        if ingredient_form.is_valid():
+            ingredient_form.save()
+            return redirect("add")
+    ingredient_form = IngredientForm()
+    template = "add_ingredient.html"
+    context = {"ingredient_form": ingredient_form,}
+    return render(request, template, context)
 
 
 # Create your views here.
@@ -44,6 +46,7 @@ class MealList(LoginRequiredMixin, generic.ListView):
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.request.user.pk)
         user_meals = Meal.objects.filter(user=user)
+
         context = {"user_meals": user_meals, "meal_form": MealForm()}
 
         meal_form = MealForm(data=request.POST)

@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %} {% load crispy_forms_tags %}
+
+
+<!-- form -->
+<div class="row">
+    <div class="col-10 mx-auto my-3 bg-white">
+        <form method="post" action="add">
+        {{ ingredient_form | crispy }} {% csrf_token %}
+        <button type="submit" class="btn btn-success mt-3">
+            Submit ingredient
+        </button>
+        </form>
+        <a href="{% url "home" %}" class="btn btn-success my-3" role="button">Back Home</a>
+    </div>
+</div>
+
+{% endblock %}

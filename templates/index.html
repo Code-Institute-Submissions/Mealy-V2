@@ -46,15 +46,8 @@
       data-bs-target="#add_meal_modal"
       >
       Add Meal
-      </button>      
-      <button
-      type="button"
-      class="btn btn-success center"
-      data-bs-toggle="modal"
-      data-bs-target="#add_ingredient_modal"
-      >
-      Add ingredient
       </button>
+      <a href="{% url "add" %}" class="btn btn-success my-3" role="button">Add Ingredients</a>     
     </div>
   </div>
   <!-- modal -->
@@ -81,45 +74,6 @@
             {{ meal_form | crispy }} {% csrf_token %}
             <button type="submit" class="btn btn-success mt-3">
               Submit Meal
-            </button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- modal -->
-  <div
-    class="modal fade"
-    id="add_ingredient_modal"
-    tabindex="-1"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="add_ingredient_title">Add ingredient</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <!-- form -->
-          <form method="post" action="add">
-            {{ ingredient_form | crispy }} {% csrf_token %}
-            <button type="submit" class="btn btn-success mt-3">
-              Submit ingredient
             </button>
           </form>
         </div>
