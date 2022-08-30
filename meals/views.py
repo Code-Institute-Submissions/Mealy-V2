@@ -5,18 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from .forms import MealForm, IngredientForm
 
-def toggle_planned(request, meal_id):
-    """toggles planned meal bool"""
-    meal = get_object_or_404(Meal, id=meal_id)
-    if meal.planned:
-        meal.planned = False
-        meal.save()
-        return redirect("home")
-
-    if meal.planned is False:
-        meal.planned = True
-        meal.save()
-        return redirect("home")
 
 def delete_meal(request, meal_id):
     """deletes meal"""
@@ -25,6 +13,7 @@ def delete_meal(request, meal_id):
     if meal.user == user:
         meal.delete()
     return redirect("home")
+
 
 def add_ingredient(request):
     """add ingredients"""
@@ -42,25 +31,20 @@ def add_ingredient(request):
 class MealList(LoginRequiredMixin, generic.ListView):
     """meal list for home page. also
     features meal form creation"""
+
     model = Meal
     template_name = "index.html"
 
     def get(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.request.user.pk)
         user_meals = Meal.objects.filter(user=user)
-        context = {
-            "user_meals": user_meals,
-            "meal_form": MealForm()
-        }
+        context = {"user_meals": user_meals, "meal_form": MealForm()}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.request.user.pk)
         user_meals = Meal.objects.filter(user=user)
-        context = {
-            "user_meals": user_meals,
-            "meal_form": MealForm()
-        }
+        context = {"user_meals": user_meals, "meal_form": MealForm()}
 
         meal_form = MealForm(data=request.POST)
         if meal_form.is_valid():
@@ -72,10 +56,10 @@ class MealList(LoginRequiredMixin, generic.ListView):
             meal_form = MealForm()
         return render(request, self.template_name, context)
 
-        
-    
+
 class ShopList(LoginRequiredMixin, generic.ListView):
     """shopping list view"""
+
     model = Meal
     template_name = "list.html"
 
@@ -83,12 +67,6 @@ class ShopList(LoginRequiredMixin, generic.ListView):
         user = User.objects.get(pk=self.request.user.pk)
         user_meals = Meal.objects.filter(user=user)
         context = {
-            'user_meals': user_meals,
+            "user_meals": user_meals,
         }
         return render(request, self.template_name, context)
-
-
-
-
-
-
