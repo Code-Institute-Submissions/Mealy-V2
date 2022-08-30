@@ -20,8 +20,10 @@ def toggle_planned(request, meal_id):
 
 def delete_meal(request, meal_id):
     """deletes meal"""
+    user = request.user
     meal = get_object_or_404(Meal, id=meal_id)
-    meal.delete()
+    if meal.user == user:
+        meal.delete()
     return redirect("home")
 
 def add_ingredient(request):
