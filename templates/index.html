@@ -15,10 +15,6 @@
         </div>
         <div class="card-body">
           <p class="card-text">{{ meal.meal_description}}</p>
-            <button class="btn btn-outline-success mb-3">
-              {% if meal.planned %} planned {% else %} add to plan {% endif %}
-              <a href="/toggle_planned/{{ meal.id }}"></a>
-            </button>
           <div>
             <a
               class="btn btn-outline-success mb-3"
