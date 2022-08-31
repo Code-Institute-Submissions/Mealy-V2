@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "mealyapp-v2.herokuapp.com"]
+ALLOWED_HOSTS = ["mealyapp-v2.herokuapp.com"]
 
 
 # Application definition
