@@ -1,94 +1,76 @@
-{% extends "base.html" %} {% block content %} {% load crispy_forms_tags %}
-
-<div class="container-fluid">
-  <div class="row">
-    <h1 class="text-center text-light mt-4">Your Meals</h1>
-    <!-- Meal Entries Column -->
-    {% for meal in user_meals %}
-    <div class="col-12">
-      <div class="card bg-light my-3">
-        <div class="card-header">
-          <h4 class="card-title">{{ meal.meal_name }}</h4>
-          <a href="/delete_meal/{{ meal.id }}">
-            <i class="fas fa-backspace float-end"></i>
-          </a>
-        </div>
-        <div class="card-body">
-          <p class="card-text">{{ meal.meal_description}}</p>
-          <div>
-            <a
-              class="btn btn-outline-success mb-3"
-              data-bs-toggle="collapse"
-              aria-expanded="false"
-              aria-controls="collapse-1"
-              href="#collapse-1"
-              role="button"
-              >Show Ingredients</a
-            >
-            <div id="collapse-1" class="collapse">
-              <ul id="meals-ingredient-list" class="list-group">
-                {% for ingredient in meal.ingredients.all %}
-                <li class="list-group-item">{{ ingredient }}</li>
-                {% endfor %}
-              </ul>
+{% extends "base.html" %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="text-center text-light mt-4">Your Meals</h1>
+            <!-- Meal Entries Column -->
+            {% for meal in user_meals %}
+                <div class="col-12">
+                    <div class="card bg-light my-3">
+                        <div class="card-header">
+                            <h4 class="card-title">{{ meal.meal_name }}</h4>
+                            <a href="/delete_meal/{{ meal.id }}">
+                                <i class="fas fa-backspace float-end"></i>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ meal.meal_description }}</p>
+                            <div>
+                            <a class="btn btn-outline-success mb-3"
+                               data-bs-toggle="collapse"
+                               aria-expanded="false"
+                               aria-controls="collapse-1"
+                               href="#collapse-1"
+                               role="button">Show Ingredients</a
+                            >
+                            <div id="collapse-1" class="collapse">
+                                <ul id="meals-ingredient-list" class="list-group">
+                                    {% for ingredient in meal.ingredients.all %}<li class="list-group-item">{{ ingredient }}</li>{% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-    <div class="text-center mb-3">
-      <!-- Button trigger modal -->
-      <button
-      type="button"
-      class="btn btn-success center"
-      data-bs-toggle="modal"
-      data-bs-target="#add_meal_modal"
-      >
-      Add Meal
-      </button>
-      <a href="{% url "add" %}" class="btn btn-success my-3" role="button">Add Ingredients</a>     
-    </div>
-  </div>
-  <!-- modal -->
-  <div
-    class="modal fade mt-5"
-    id="add_meal_modal"
-    tabindex="-1"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="add_meal_title">Add Meal</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <!-- form -->
-          <form method="post">
-            {{ meal_form | crispy }} {% csrf_token %}
-            <button type="submit" class="btn btn-success mt-3">
-              Submit Meal
+        {% endfor %}
+        <div class="text-center mb-3">
+            <!-- Button trigger modal -->
+            <button type="button"
+                    class="btn btn-success center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#add_meal_modal">
+                Add Meal
             </button>
-          </form>
+            <a href="{% url "add" %}" class="btn btn-success my-3" role="button">Add Ingredients</a>
         </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
+    <!-- modal -->
+    <div class="modal fade mt-5"
+         id="add_meal_modal"
+         tabindex="-1"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_meal_title">Add Meal</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- form -->
+                    <form method="post">
+                        {{ meal_form | crispy }} {% csrf_token %}
+                        <button type="submit" class="btn btn-success mt-3">Submit Meal</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock %}
